@@ -1,0 +1,256 @@
+import { AssetItem, SharedMember, UserProfile } from '../types/vault';
+import { addMonthsToIso, offsetDaysFromToday } from '../utils/formatters';
+
+export const INVOICE_FADED_IMG =
+  '/src/assets/images/invoice_faded_thermal_1794910623807.jpg';
+export const INVOICE_RESTORED_IMG =
+  '/src/assets/images/invoice_restored_clean_1794910624369.jpg';
+export const SERIAL_STICKER_IMG =
+  '/src/assets/images/serial_sticker_appliance_1794910624415.jpg';
+export const INVOICE_CLINIC_IMG =
+  '/src/assets/images/invoice_clinic_gst_1794910625922.jpg';
+
+function purchaseForDaysRemaining(
+  daysLeft: number,
+  warrantyMonths: number
+): { purchaseDate: string; expiryDate: string } {
+  const expiryDate = offsetDaysFromToday(daysLeft);
+  const purchaseDate = addMonthsToIso(expiryDate, -warrantyMonths);
+  return { purchaseDate, expiryDate };
+}
+
+const samsungDates = purchaseForDaysRemaining(412, 24);
+const luminousDates = purchaseForDaysRemaining(710, 36);
+const hpDates = purchaseForDaysRemaining(12, 12);
+const aquaguardDates = purchaseForDaysRemaining(185, 12);
+const philipsDates = purchaseForDaysRemaining(-64, 24);
+const dellDates = purchaseForDaysRemaining(328, 24);
+const voltasDates = purchaseForDaysRemaining(24, 12);
+const morepenDates = purchaseForDaysRemaining(290, 18);
+
+export const INITIAL_ASSETS: AssetItem[] = [
+  {
+    id: 'asset-samsung-fridge',
+    brand: 'Samsung',
+    productName: '653L Side-by-Side Refrigerator',
+    model: 'RS76CG8003S9HL',
+    category: 'appliance',
+    serialNumber: '0B4X4EBT801423P',
+    purchaseDate: samsungDates.purchaseDate,
+    warrantyMonths: 24,
+    expiryDate: samsungDates.expiryDate,
+    sellerGstin: '27AABCS1429B1Z5',
+    amountInr: 68990,
+    gstEligible: false,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_RESTORED_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'Samsung India Service',
+    supportPhone: '1800 40 7267864',
+    addedAt: offsetDaysFromToday(-300),
+    notes: '10-year digital inverter compressor warranty included separately.',
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-luminous-battery',
+    brand: 'Luminous',
+    productName: '150Ah Tall Tubular Inverter Battery',
+    model: 'RC 18000 Pro',
+    category: 'power',
+    serialNumber: 'LUM24B150T9941',
+    purchaseDate: luminousDates.purchaseDate,
+    warrantyMonths: 36,
+    expiryDate: luminousDates.expiryDate,
+    sellerGstin: '29AABCL3019F1Z8',
+    amountInr: 14500,
+    gstEligible: false,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_RESTORED_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'Luminous Power Care',
+    supportPhone: '1800 103 3039',
+    addedAt: offsetDaysFromToday(-240),
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-hp-printer',
+    brand: 'HP',
+    productName: 'LaserJet Pro MFP M126nw Printer',
+    model: 'CZ175A',
+    category: 'electronics',
+    serialNumber: 'CNB8K42190',
+    purchaseDate: hpDates.purchaseDate,
+    warrantyMonths: 12,
+    expiryDate: hpDates.expiryDate,
+    sellerGstin: '29AAMCM1234F1Z3',
+    amountInr: 18200,
+    gstEligible: true,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_CLINIC_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'HP India Business Support',
+    supportPhone: '1800 258 7170',
+    addedAt: offsetDaysFromToday(-353),
+    notes: 'Reception desk clinic invoice claimable under office equipment ITC.',
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-aquaguard-ro',
+    brand: 'Aquaguard',
+    productName: 'Aura RO+UV+MTDS Water Purifier',
+    model: 'GWPDARU000',
+    category: 'appliance',
+    serialNumber: null,
+    purchaseDate: aquaguardDates.purchaseDate,
+    warrantyMonths: 12,
+    expiryDate: aquaguardDates.expiryDate,
+    sellerGstin: '27AAACE0198H1Z1',
+    amountInr: 16490,
+    gstEligible: false,
+    needsConfirmation: true,
+    lowConfidenceFields: ['serialNumber', 'purchaseDate'],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_RESTORED_IMG,
+    serialStickerUrl: null,
+    supportName: 'Eureka Forbes Aquaguard',
+    supportPhone: '1860 266 1177',
+    addedAt: offsetDaysFromToday(-2),
+    notes: 'Added via WhatsApp photo; serial sticker pending scan.',
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-philips-mixer',
+    brand: 'Philips',
+    productName: 'HL7756/00 750W Mixer Grinder',
+    model: 'HL7756/00',
+    category: 'appliance',
+    serialNumber: 'PH7756M009482',
+    purchaseDate: philipsDates.purchaseDate,
+    warrantyMonths: 24,
+    expiryDate: philipsDates.expiryDate,
+    sellerGstin: '27AAACP3412Q1Z9',
+    amountInr: 4299,
+    gstEligible: false,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_RESTORED_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'Philips Domestic Appliances',
+    supportPhone: '1800 102 2929',
+    addedAt: offsetDaysFromToday(-790),
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-dell-laptop',
+    brand: 'Dell',
+    productName: 'Inspiron 14 5430 Laptop',
+    model: 'IN5430-I5-16G',
+    category: 'electronics',
+    serialNumber: '9H3KL73',
+    purchaseDate: dellDates.purchaseDate,
+    warrantyMonths: 24,
+    expiryDate: dellDates.expiryDate,
+    sellerGstin: '29AABCD2910E1Z2',
+    amountInr: 64990,
+    gstEligible: true,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_CLINIC_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'Dell ProSupport India',
+    supportPhone: '1800 425 0088',
+    addedAt: offsetDaysFromToday(-402),
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-voltas-ac',
+    brand: 'Voltas',
+    productName: '1.5 Ton 5-Star Inverter Split AC',
+    model: '185V Vectra Elite',
+    category: 'appliance',
+    serialNumber: 'VOL185VEC29410',
+    purchaseDate: voltasDates.purchaseDate,
+    warrantyMonths: 12,
+    expiryDate: voltasDates.expiryDate,
+    sellerGstin: '27AAACV2809L1Z4',
+    amountInr: 38490,
+    gstEligible: true,
+    needsConfirmation: false,
+    lowConfidenceFields: [],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_RESTORED_IMG,
+    serialStickerUrl: SERIAL_STICKER_IMG,
+    supportName: 'Voltas Customer Care',
+    supportPhone: '1860 599 4555',
+    addedAt: offsetDaysFromToday(-341),
+    notes: 'Consultation room split unit. Check AMC renewal before summer.',
+    animatedVideos: [],
+  },
+  {
+    id: 'asset-morepen-clinic',
+    brand: 'Dr. Morepen',
+    productName: 'Compressor Nebulizer & Oximeter Kit',
+    model: 'CN-10 / PO-12A',
+    category: 'medical',
+    serialNumber: null,
+    purchaseDate: morepenDates.purchaseDate,
+    warrantyMonths: 18,
+    expiryDate: morepenDates.expiryDate,
+    sellerGstin: '07AAACM1920P1Z7',
+    amountInr: 6850,
+    gstEligible: true,
+    needsConfirmation: true,
+    lowConfidenceFields: ['serialNumber', 'sellerGstin'],
+    invoiceOriginalUrl: INVOICE_FADED_IMG,
+    invoiceRestoredUrl: INVOICE_CLINIC_IMG,
+    serialStickerUrl: null,
+    supportName: 'Dr. Morepen Medical Helpline',
+    supportPhone: '1800 11 7600',
+    addedAt: offsetDaysFromToday(-1),
+    notes: 'Clinic diagnostic kit; thermal bill uploaded via WhatsApp.',
+    animatedVideos: [],
+  },
+];
+
+export const INITIAL_MEMBERS: SharedMember[] = [
+  {
+    id: 'member-owner',
+    name: 'Dr. Aarav Kulkarni',
+    phone: '98204 51120',
+    role: 'Owner',
+    addedAt: offsetDaysFromToday(-400),
+  },
+  {
+    id: 'member-ca',
+    name: 'Mehta & Co. Chartered Accountants',
+    phone: '98192 44018',
+    role: 'CA / Tax',
+    addedAt: offsetDaysFromToday(-95),
+  },
+];
+
+export const INITIAL_PROFILE: UserProfile = {
+  name: 'Dr. Aarav Kulkarni',
+  phone: '98204 51120',
+  vaultName: 'Kulkarni Home & Clinic Vault',
+};
+
+export const BRAND_HELPLINES: Record<string, { name: string; phone: string }> = {
+  Samsung: { name: 'Samsung India Service', phone: '1800 40 7267864' },
+  LG: { name: 'LG India Customer Care', phone: '1800 315 9999' },
+  Voltas: { name: 'Voltas Customer Care', phone: '1860 599 4555' },
+  Luminous: { name: 'Luminous Power Care', phone: '1800 103 3039' },
+  HP: { name: 'HP India Business Support', phone: '1800 258 7170' },
+  Aquaguard: { name: 'Eureka Forbes Aquaguard', phone: '1860 266 1177' },
+  Philips: { name: 'Philips Domestic Appliances', phone: '1800 102 2929' },
+  Dell: { name: 'Dell ProSupport India', phone: '1800 425 0088' },
+  'Dr. Morepen': { name: 'Dr. Morepen Medical Helpline', phone: '1800 11 7600' },
+};

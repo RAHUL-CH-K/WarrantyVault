@@ -1,0 +1,6 @@
+{
+  "name": "ParchiVault",
+  "description": "Digital warranty and asset vault for urban Indian households and micro-offices with WhatsApp bill verification, QR serial scanning, and claim packet generation.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
